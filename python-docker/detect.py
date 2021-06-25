@@ -110,7 +110,7 @@ def detect(weights='yolov5s.pt',  # model.pt path(s)
                 p, s, im0, frame = path[i], f'{i}: ', im0s[i].copy(), dataset.count
             else:
                 p, s, im0, frame = path, '', im0s.copy(), getattr(dataset, 'frame', 0)
-
+                
             p = Path(p)  # to Path
             save_path = str(save_dir / p.name)  # img.jpg
             txt_path = str(save_dir / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # img.txt
