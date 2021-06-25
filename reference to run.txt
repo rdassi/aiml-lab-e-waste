@@ -1,0 +1,26 @@
+Docker:
+Link- https://docs.docker.com/language/python/build-images/
+
+Build and image- 
+docker build --tag python-docker .
+
+View Local images-
+docker images
+
+Run docker image-
+docker run python-docker
+docker run --publish 5000:5000 python-docker [specifying port here]
+
+https://uoa-eresearch.github.io/eresearch-cookbook/recipe/2014/11/26/python-virtual-env/
+
+ACTIVATE VIRTUAL ENVIRONMENT:
+source ENV/bin/activate
+
+Deactivate the virtual environment
+To decativate the virtual environment and use your original Python environment, simply type ‘deactivate’.
+
+deactivate
+
+
+
+https://stackoverflow.com/questions/65786221/import-flask-could-not-be-resolved-from-source-pylance-reportmissingmodulesou
