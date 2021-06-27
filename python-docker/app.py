@@ -29,7 +29,7 @@ from flask import Flask
 
 app=Flask(__name__)
 run_with_ngrok(app)
-app.config['UPLOAD_FOLDER']='/content/yolov5/uploads'
+app.config['UPLOAD_FOLDER']='/home/risha/Desktop/aiml-lab-e-waste/python-docker/uploads'
 @app.route('/', methods=['GET'])
 def index():
     # Main page
@@ -66,7 +66,7 @@ def upload():
 
         # Make prediction
         #similar_glass_details=glass_detection.getUrl(file_path)
-        return detect.detect(weights='/content/drive/MyDrive/best.pt', source=file_path, view_img=True,project='/content/yolov5/runs/detect', save_txt=True)
+        return detect.detect(weights='/home/risha/Desktop/aiml-lab-e-waste/python-docker/weights/best.pt', source=file_path, view_img=True,project='/home/risha/Desktop/aiml-lab-e-waste/python-docker/runs/detect', save_txt=True)
         #return jsonify(res)
     return render_template('upload.html')
 

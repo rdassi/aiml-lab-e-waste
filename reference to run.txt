@@ -24,3 +24,13 @@ deactivate
 
 
 https://stackoverflow.com/questions/65786221/import-flask-could-not-be-resolved-from-source-pylance-reportmissingmodulesou
+
+
+
+
+ERROR:
+
+
+
+POSSIBLE SOLUTION:
+https://stackoverflow.com/questions/63977422/error-trying-to-import-cv2opencv-python-package

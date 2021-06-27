@@ -125,7 +125,7 @@ def detect(weights='yolov5s.pt',  # model.pt path(s)
                 for c in det[:, -1].unique():
                     n = (det[:, -1] == c).sum()  # detections per class
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
-                    obj[f"{names[int(c)]}"]=n
+                    obj[f"{names[int(c)]}"]= int(n)
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
                     if save_txt:  # Write to file
@@ -146,9 +146,9 @@ def detect(weights='yolov5s.pt',  # model.pt path(s)
 
             # Stream results
             if view_img:
-                #cv2.imshow(str(p), im0)
-                #cv2.waitKey(1)  # 1 millisecond
-                cv2.imshow(im0)
+                cv2.imshow(str(p), im0)
+                cv2.waitKey(1)  # 1 millisecond
+                #cv2.imshow(im0)
             # Save results (image with detections)
             if save_img:
                 if dataset.mode == 'image':
@@ -176,7 +176,7 @@ def detect(weights='yolov5s.pt',  # model.pt path(s)
         strip_optimizer(weights)  # update model (to fix SourceChangeWarning)
 
     print(f'Done. ({time.time() - t0:.3f}s)')
-    print(obj)
+    return(obj)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
