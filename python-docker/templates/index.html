@@ -172,8 +172,9 @@
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <!-- FORM TO SEND DATA TO SERVER -->
-                    <form id="upload-file" method="post" enctype="multipart/form-data" action="/predict"
-                        id="file-upload">
+                    <form id="upload-file" method="post" enctype="multipart/form-data" action="/predict">
+                        <!-- id="file-upload"> --> 
+                        <!-- extra id for some reason -->
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" name="name" class="form-control" id="name" placeholder="Name">
@@ -284,15 +285,17 @@
             </div>
             <div class="col-sm-4">
                 <div class="input-group">
-                    <input type="text" class="form-control dark-bg" placeholder="Pincode">
+                    <form id="collector-pincode" method="post" enctype="multipart/form-data" action="/getpincodedeets">
+                    <input type="text" id="pincode" name= "pincode" class="form-control dark-bg" placeholder="Pincode">
                     <div class="input-group-append">
                         <!-- <select class="btn-brop">
                         <option>.com</option>
                         <option>.net</option>
                         <option>.org</option>
                     </select> -->
-                        <button class="btn btn-outline-secondary btn-org" type="button">Go</button>
+                        <button class="btn btn-outline-secondary btn-org" type="submit">Go</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
