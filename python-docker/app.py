@@ -68,7 +68,7 @@ def upload():
         #similar_glass_details=glass_detection.getUrl(file_path)
         return detect.detect(weights='/home/risha/Desktop/aiml-lab-e-waste/python-docker/weights/best.pt', source=file_path, view_img=True,project='/home/risha/Desktop/aiml-lab-e-waste/python-docker/runs/detect', save_txt=True)
         #return jsonify(res)
-    return render_template('upload.html')
+    return render_template('test.html')
 
 if __name__ == '__main__':
     app.run()

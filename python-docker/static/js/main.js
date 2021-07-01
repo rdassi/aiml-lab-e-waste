@@ -26,8 +26,17 @@ $(document).ready(function () {
 
     // Predict
     $('#btn-predict').click(function () {
-        var form_data = new FormData($('#upload-file')[0]);
+        var form_data = new FormData($('upload-file')[5]);
+        //APPENDING FORM VALUES TO FORM DATA OBJECT
 
+        // form_data.append("name", $("name"));
+        // form_data.append("email", $("email"));
+        // form_data.append("phone", $("phone"));
+        // form_data.append("landmark", $("landmark"));
+        // form_data.append("pincode", $("pincode"));
+        // form_data.append("imageUpload", $("imageUpload")[0]);
+
+        console.log(form_data);
         // Show loading animation
         $(this).hide();
         $('.loader').show();
@@ -44,8 +53,9 @@ $(document).ready(function () {
             success: function (data) {
                 // Get and display the result
                 $('.loader').hide();
-                $('#result').fadeIn(600);
-                $('#result').text(' Result:  ' + data);
+                console.log(data);
+                // $('#result').fadeIn(600);
+                // $('#result').text(' Result:  ' + data);
                 console.log('Success!');
             },
         });
