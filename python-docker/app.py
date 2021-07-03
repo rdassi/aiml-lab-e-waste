@@ -13,7 +13,7 @@ from distutils.dir_util import copy_tree
 import csv
 
 # Flask utils
-from flask import Flask, redirect, url_for, request, render_template,send_from_directory, 
+from flask import Flask, redirect, url_for, request, render_template,send_from_directory 
 from werkzeug.utils import secure_filename
 #from gevent.pywsgi import WSGIServer
 
@@ -66,34 +66,42 @@ def upload():
         file_path=os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-        filename = secure_filename(file.filename)
-        file_path=os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # filename = secure_filename(file.filename)
+        # file_path=os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
         name = request.form['name']
         email = request.form['email']
         phone = request.form['phone']
         landmark = request.form['landmark']
         pincode = request.form['pincode']
-        filename_csv=f'{pincode}.csv'
+
+        filename_csv=pincode+".csv"
         # This array is the fields your csv file has and in the following code
         # you'll see how it will be used. Change it to your actual csv's fields.
-        fieldnames = ['name', 'email','phone','landmark','pincode']
+        
+        # GET RESULTS FROM OBJECT DETECTION
+        # {"battery":1,"bulb":1,"keyboard":1,"laptop":0,"mobile phone":0,"monitor":0,"mouse":0,"phone":0}
+        result_label= detect.detect(weights='/home/risha/Desktop/aiml-lab-e-waste/python-docker/weights/best.pt', source=file_path, view_img=True,project='/home/risha/Desktop/aiml-lab-e-waste/python-docker/runs/detect', save_txt=True)
+
+        #FIELDS STORED IN CSV FILE
+        fieldnames = ['name', 'email','phone','landmark','pincode','battery', 'bulb', 'keyboard', 'laptop', 'mobile phone', 'monitor', 'mouse']
 
         # We repeat the same step as the reading, but with "w" to indicate
         # the file is going to be written.
-        with open(filename_csv,'w+') as inFile:
+        with open(filename_csv,'a+') as inFile:
             # DictWriter will help you write the file easily by treating the
             # csv as a python's class and will allow you to work with
             # dictionaries instead of having to add the csv manually.
             writer = csv.DictWriter(inFile, fieldnames=fieldnames)
 
             # writerow() will write a row in your csv file
-            writer.writerow({'name': name, 'email': email, 'phone':phone,'landmark':landmark, 'pincode':pincode})
+            # {"battery":1,"bulb":1,"keyboard":1,"laptop":0,"mobile phone":0,"monitor":0,"mouse":0,"phone":0}
+            writer.writerow({'name': name, 'email': email, 'phone':phone,'landmark':landmark, 'pincode':pincode,'battery': result_label['battery'], 'bulb': ['bulb'], 'keyboard': ['keyboard'], 'laptop': ['laptop'], 'mobile phone':['mobile phone'], 'monitor': ['monitor'], 'mouse': ['mouse'] })
 
         # Make prediction
         #similar_glass_details=glass_detection.getUrl(file_path)
-        return detect.detect(weights='/home/risha/Desktop/aiml-lab-e-waste/python-docker/weights/best.pt', source=file_path, view_img=True,project='/home/risha/Desktop/aiml-lab-e-waste/python-docker/runs/detect', save_txt=True)
+        return true
         #return jsonify(res)
     return render_template('test.html')
 
@@ -103,7 +111,7 @@ def ugetpincodedeets():
 # def download(filename):
     collector_pincode=request.form['pincode']
     # Appending app path to upload folder path within app root folder
-    filename_collector=f'{collector_pincode}.csv'
+    filename_collector=collector_pincode+ ".csv"
     uploads = os.path.join('/home/sakshi/AIML LAB/aiml-lab-e-waste/python-docker', filename_collector)
     # Returning file from appended path
     return send_from_directory(directory=uploads, filename=filename_collector)
