@@ -3,7 +3,7 @@ from __future__ import division, print_function
 import sys
 import os
 import glob
-import re, glob, os#, cv2
+import re, glob, os, cv2
 import numpy as np
 import pandas as pd
 from shutil import copyfile
@@ -31,7 +31,12 @@ from flask import Flask
 
 app=Flask(__name__)
 run_with_ngrok(app)
+# TO RUN ON LOCAL SYSTEM
 app.config['UPLOAD_FOLDER']='/home/risha/Desktop/aiml-lab-e-waste/python-docker/uploads'
+
+# TO RUN ON GOOGLE COLAB
+# app.config['UPLOAD_FOLDER']='/content/aiml-lab-e-waste/python-docker/uploads'
+
 @app.route('/', methods=['GET'])
 def index():
     # Main page
@@ -84,6 +89,9 @@ def upload():
         # {"battery":1,"bulb":1,"keyboard":1,"laptop":0,"mobile phone":0,"monitor":0,"mouse":0,"phone":0}
         result_label= detect.detect(weights='/home/risha/Desktop/aiml-lab-e-waste/python-docker/weights/best.pt', source=file_path, view_img=True,project='/home/risha/Desktop/aiml-lab-e-waste/python-docker/runs/detect', save_txt=True)
 
+        # TO RUN ON COLAB
+        # result_label= detect.detect(weights='/content/aiml-lab-e-waste/python-docker/weights/best.pt', save_txt=True, project='/content/aiml-lab-e-waste/python-docker/runs/detect', view_img=True)
+
         #FIELDS STORED IN CSV FILE
         fieldnames = ['name', 'email','phone','landmark','pincode','battery', 'bulb', 'keyboard', 'laptop', 'mobile phone', 'monitor', 'mouse']
 
@@ -97,7 +105,7 @@ def upload():
 
             # writerow() will write a row in your csv file
             # {"battery":1,"bulb":1,"keyboard":1,"laptop":0,"mobile phone":0,"monitor":0,"mouse":0,"phone":0}
-            writer.writerow({'name': name, 'email': email, 'phone':phone,'landmark':landmark, 'pincode':pincode,'battery': result_label['battery'], 'bulb': ['bulb'], 'keyboard': ['keyboard'], 'laptop': ['laptop'], 'mobile phone':['mobile phone'], 'monitor': ['monitor'], 'mouse': ['mouse'] })
+            writer.writerow({'name': name, 'email': email, 'phone':phone,'landmark':landmark, 'pincode':pincode,'battery': result_label['battery'], 'bulb': result_label['bulb'], 'keyboard': result_label['keyboard'], 'laptop': result_label['laptop'], 'mobile phone': result_label['mobile phone'], 'monitor': result_label['monitor'], 'mouse': result_label['mouse'] })
 
         # Make prediction
         #similar_glass_details=glass_detection.getUrl(file_path)
@@ -112,7 +120,12 @@ def ugetpincodedeets():
     collector_pincode=request.form['pincode']
     # Appending app path to upload folder path within app root folder
     filename_collector=collector_pincode+ ".csv"
-    uploads = os.path.join('/home/sakshi/AIML LAB/aiml-lab-e-waste/python-docker', filename_collector)
+
+    # CHANGE PATH AS PER YOUR LOCAL SYSTEM
+    uploads = os.path.join('/home/Desktop/aiml-lab-e-waste/python-docker', filename_collector)
+
+    # TO RUN ON COLAB
+    # uploads = os.path.join('/content/aiml-lab-e-waste/python-docker', filename_collector)
     # Returning file from appended path
     return send_from_directory(directory=uploads, filename=filename_collector)
 if __name__ == '__main__':

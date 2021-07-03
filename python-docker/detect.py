@@ -6,6 +6,7 @@ import cv2
 import torch
 import torch.backends.cudnn as cudnn
 
+# UNCOMMENT TO RUN ON COLAB
 #from google.colab.patches import cv2_imshow
 
 
@@ -146,9 +147,11 @@ def detect(weights='yolov5s.pt',  # model.pt path(s)
 
             # Stream results
             if view_img:
+                # RUNNING ON SYSTEM
                 cv2.imshow(str(p), im0)
                 cv2.waitKey(1)  # 1 millisecond
-                #cv2.imshow(im0)
+                # RUNNING ON COLAB
+                # cv2.imshow(im0)
             # Save results (image with detections)
             if save_img:
                 if dataset.mode == 'image':
