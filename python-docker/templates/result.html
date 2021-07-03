@@ -55,13 +55,13 @@
                 <div class="col-sm-6 animate-box" data-animate-effect="fadeInLeft">
                     <div class="price-box">
                         <h3><b>Uploaded Image</b></h3>
-                        <img src="{{ img_path }}">
+                        <img src="{{ img_path }}" alt="Uploaded Image">
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="price-box animate-box" data-animate-effect="fadeInRight">
                         <h3><b>Detected Image</b></h3>
-                        <img src="{{ detected_img_path }}">
+                        <img src="{{ detected_img_path }}" alt="Image after detection">
                     </div>
                 </div>
             </div>
@@ -90,8 +90,8 @@
                         <div class="gr-line"></div>
                         <div>Mouse: {{mouse}}</div>
                         <div class="gr-line"></div>
-                        <div>Phone: {{phone}}</div>
-                        <div class="gr-line"></div>
+                        <!-- <div>Phone: {{phone}}</div>
+                        <div class="gr-line"></div> -->
                   
                         <br>
                         <button class="btn btn-banner" ><a href="/" style="text-decoration: none; color: white;">Upload another image</a></button>

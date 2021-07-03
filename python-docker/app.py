@@ -111,7 +111,14 @@ def upload():
         #similar_glass_details=glass_detection.getUrl(file_path)
         return true
         #return jsonify(res)
-    return render_template('test.html')
+        # /home/risha/Desktop/aiml-lab-e-waste/python-docker/uploads
+    #ON SYSTEM
+    # return render_template('result.html', img_path=f"/home/risha/Desktop/aiml-lab-e-waste/python-docker/uploads/{filename}",detected_img_path=f"/content/aiml-lab-e-waste/python-docker/runs/detect/{filename}",battery=result_label['battery'],  bulb= result_label['bulb'], keyboard=result_label['keyboard'], laptop= result_label['laptop'], mobile_phone=result_label['mobile phone'], monitor=result_label['monitor'], mouse=result_label['mouse'])
+
+    img_path= "/content/aiml-lab-e-waste/python-docker/uploads/" + str(filename)
+    detected_img_path= "/content/aiml-lab-e-waste/python-docker/runs/detect/" + str(filename)
+    # ON COLAB
+    return render_template('result.html', img_path=img_path,detected_img_path=detected_img_path,battery=result_label['battery'],  bulb= result_label['bulb'], keyboard=result_label['keyboard'], laptop= result_label['laptop'], mobile_phone=result_label['mobile phone'], monitor=result_label['monitor'], mouse=result_label['mouse'])
 
 @app.route('/getpincodedeets', methods=['POST'])
 def ugetpincodedeets():
