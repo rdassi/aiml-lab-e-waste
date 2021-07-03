@@ -35,9 +35,9 @@ def detect(weights='yolov5s.pt',  # model.pt path(s)
            agnostic_nms=False,  # class-agnostic NMS
            augment=False,  # augmented inference
            update=False,  # update all models
-           project='runs/detect',  # save results to project/name
-           name='exp',  # save results to project/name
-           exist_ok=False,  # existing project/name ok, do not increment
+           project='runs',  # save results to project/name
+           name='detect',  # save results to project/name
+           exist_ok=True,  # existing project/name ok, do not increment
            line_thickness=3,  # bounding box thickness (pixels)
            hide_labels=False,  # hide labels
            hide_conf=False,  # hide confidences
@@ -151,7 +151,7 @@ def detect(weights='yolov5s.pt',  # model.pt path(s)
                 cv2.imshow(str(p), im0)
                 cv2.waitKey(1)  # 1 millisecond
                 # RUNNING ON COLAB
-                # cv2.imshow(im0)
+                # cv2_imshow(im0)
             # Save results (image with detections)
             if save_img:
                 if dataset.mode == 'image':
