@@ -108,7 +108,11 @@ body {
 
 .btn-org {
     background-color: #f47d23;
+<<<<<<< HEAD
 
+=======
+    font-weight: bold;
+>>>>>>> 9699cb13a9c6a7cdef7aadea777f526cef5ac602
     border: 2px solid #f47d23;
     color: white;
 }

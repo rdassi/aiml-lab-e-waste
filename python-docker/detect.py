@@ -6,6 +6,7 @@ import cv2
 import torch
 import torch.backends.cudnn as cudnn
 
+# UNCOMMENT TO RUN ON COLAB
 #from google.colab.patches import cv2_imshow
 
 
@@ -34,9 +35,9 @@ def detect(weights='yolov5s.pt',  # model.pt path(s)
            agnostic_nms=False,  # class-agnostic NMS
            augment=False,  # augmented inference
            update=False,  # update all models
-           project='runs/detect',  # save results to project/name
-           name='exp',  # save results to project/name
-           exist_ok=False,  # existing project/name ok, do not increment
+           project='runs',  # save results to project/name
+           name='detect',  # save results to project/name
+           exist_ok=True,  # existing project/name ok, do not increment
            line_thickness=3,  # bounding box thickness (pixels)
            hide_labels=False,  # hide labels
            hide_conf=False,  # hide confidences
@@ -146,9 +147,11 @@ def detect(weights='yolov5s.pt',  # model.pt path(s)
 
             # Stream results
             if view_img:
+                # RUNNING ON SYSTEM
                 cv2.imshow(str(p), im0)
                 cv2.waitKey(1)  # 1 millisecond
-                #cv2.imshow(im0)
+                # RUNNING ON COLAB
+                # cv2_imshow(im0)
             # Save results (image with detections)
             if save_img:
                 if dataset.mode == 'image':
@@ -197,7 +200,7 @@ if __name__ == '__main__':
     parser.add_argument('--augment', action='store_true', help='augmented inference')
     parser.add_argument('--update', action='store_true', help='update all models')
     parser.add_argument('--project', default='runs/detect', help='save results to project/name')
-    parser.add_argument('--name', default='exp', help='save results to project/name')
+    parser.add_argument('--name', default='detect', help='save results to project/name')
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
     parser.add_argument('--line-thickness', default=3, type=int, help='bounding box thickness (pixels)')
     parser.add_argument('--hide-labels', default=False, action='store_true', help='hide labels')
