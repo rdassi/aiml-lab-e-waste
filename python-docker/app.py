@@ -90,7 +90,7 @@ def upload():
         result_label= detect.detect(weights='/home/risha/Desktop/aiml-lab-e-waste/python-docker/weights/best.pt', source=file_path, view_img=True,project='/home/risha/Desktop/aiml-lab-e-waste/python-docker/runs/detect', save_txt=True)
 
         # TO RUN ON COLAB
-        # result_label= detect.detect(weights='/content/aiml-lab-e-waste/python-docker/weights/best.pt', save_txt=True, project='/content/aiml-lab-e-waste/python-docker/runs/detect', view_img=True)
+        # result_label= detect.detect(weights='/content/aiml-lab-e-waste/python-docker/weights/best.pt', save_txt=True, project='/content/aiml-lab-e-waste/python-docker/runs', view_img=True, source=file_path)
 
         #FIELDS STORED IN CSV FILE
         fieldnames = ['name', 'email','phone','landmark','pincode','battery', 'bulb', 'keyboard', 'laptop', 'mobile phone', 'monitor', 'mouse']
