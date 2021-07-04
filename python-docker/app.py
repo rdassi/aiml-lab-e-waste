@@ -32,10 +32,10 @@ from flask import Flask
 app=Flask(__name__)
 run_with_ngrok(app)
 # TO RUN ON LOCAL SYSTEM
-app.config['UPLOAD_FOLDER']='/home/risha/Desktop/aiml-lab-e-waste/python-docker/uploads'
+#app.config['UPLOAD_FOLDER']='/home/risha/Desktop/aiml-lab-e-waste/python-docker/uploads'
 
 # TO RUN ON GOOGLE COLAB
-# app.config['UPLOAD_FOLDER']='/content/aiml-lab-e-waste/python-docker/uploads'
+app.config['UPLOAD_FOLDER']='/content/aiml-lab-e-waste/python-docker/uploads'
 
 @app.route('/', methods=['GET'])
 def index():
@@ -82,19 +82,22 @@ def upload():
         pincode = request.form['pincode']
 
         filename_csv=pincode+".csv"
+        csv_file_path="/content/aiml-lab-e-waste/python-docker/"+ filename_csv
         # This array is the fields your csv file has and in the following code
         # you'll see how it will be used. Change it to your actual csv's fields.
         
         # GET RESULTS FROM OBJECT DETECTION
         # {"battery":1,"bulb":1,"keyboard":1,"laptop":0,"mobile phone":0,"monitor":0,"mouse":0,"phone":0}
-        result_label= detect.detect(weights='/home/risha/Desktop/aiml-lab-e-waste/python-docker/weights/best.pt', source=file_path, view_img=True,project='/home/risha/Desktop/aiml-lab-e-waste/python-docker/runs/detect', save_txt=True)
+      
+        #result_label= detect.detect(weights='/home/risha/Desktop/aiml-lab-e-waste/python-docker/weights/best.pt', source=file_path, view_img=True,project='/home/risha/Desktop/aiml-lab-e-waste/python-docker/runs/detect', save_txt=True)
 
         # TO RUN ON COLAB
-        # result_label= detect.detect(weights='/content/aiml-lab-e-waste/python-docker/weights/best.pt', save_txt=True, project='/content/aiml-lab-e-waste/python-docker/runs', view_img=True, source=file_path)
+        result_label= detect.detect(weights='/content/aiml-lab-e-waste/python-docker/weights/best.pt', save_txt=True, project='/content/aiml-lab-e-waste/python-docker/runs', view_img=True, source=file_path)
 
         #FIELDS STORED IN CSV FILE
         fieldnames = ['name', 'email','phone','landmark','pincode','battery', 'bulb', 'keyboard', 'laptop', 'mobile phone', 'monitor', 'mouse']
-
+        #if os.path.exists(file_path):
+        #df = pd.read_csv(filename_csv) # or pd.read_excel(filename) for xls file
         # We repeat the same step as the reading, but with "w" to indicate
         # the file is going to be written.
         with open(filename_csv,'a+') as inFile:
@@ -102,6 +105,14 @@ def upload():
             # csv as a python's class and will allow you to work with
             # dictionaries instead of having to add the csv manually.
             writer = csv.DictWriter(inFile, fieldnames=fieldnames)
+            #writer.writeheader()
+            #csv_dict = [row for row in csv.DictReader(csvfile)]
+            #csv_dict = [row for row in csv.DictReader(inFile)]
+            
+            #if df.empty is True:
+            if os.stat(csv_file_path).st_size == 0:
+              writer.writeheader()
+              #writer.writerow({'name': 'Name', 'email': 'Email', 'phone':'Phone','landmark':'Landmark', 'pincode':'Pincode','battery': 'battery', 'bulb': 'bulb', 'keyboard': 'keyboard', 'laptop':'laptop', 'mobile phone': 'mobile phone', 'monitor': 'monitor', 'mouse': 'mouse' })
 
             # writerow() will write a row in your csv file
             # {"battery":1,"bulb":1,"keyboard":1,"laptop":0,"mobile phone":0,"monitor":0,"mouse":0,"phone":0}
@@ -109,11 +120,8 @@ def upload():
 
         # Make prediction
         #similar_glass_details=glass_detection.getUrl(file_path)
-        return true
+        
         #return jsonify(res)
-<<<<<<< HEAD
-    return render_template('index.html')
-=======
         # /home/risha/Desktop/aiml-lab-e-waste/python-docker/uploads
     #ON SYSTEM
     # return render_template('result.html', img_path=f"/home/risha/Desktop/aiml-lab-e-waste/python-docker/uploads/{filename}",detected_img_path=f"/content/aiml-lab-e-waste/python-docker/runs/detect/{filename}",battery=result_label['battery'],  bulb= result_label['bulb'], keyboard=result_label['keyboard'], laptop= result_label['laptop'], mobile_phone=result_label['mobile phone'], monitor=result_label['monitor'], mouse=result_label['mouse'])
@@ -132,11 +140,10 @@ def ugetpincodedeets():
     filename_collector=collector_pincode+ ".csv"
 
     # CHANGE PATH AS PER YOUR LOCAL SYSTEM
-    uploads = os.path.join('/home/Desktop/aiml-lab-e-waste/python-docker', filename_collector)
->>>>>>> 9699cb13a9c6a7cdef7aadea777f526cef5ac602
+    #uploads = os.path.join('/home/Desktop/aiml-lab-e-waste/python-docker', filename_collector)
 
     # TO RUN ON COLAB
-    # uploads = os.path.join('/content/aiml-lab-e-waste/python-docker', filename_collector)
+    uploads = os.path.join('/content/aiml-lab-e-waste/python-docker', filename_collector)
     # Returning file from appended path
     return send_from_directory(directory=uploads, filename=filename_collector)
 if __name__ == '__main__':
