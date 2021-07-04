@@ -36,6 +36,7 @@ run_with_ngrok(app)
 
 # TO RUN ON GOOGLE COLAB
 app.config['UPLOAD_FOLDER']='/content/aiml-lab-e-waste/python-docker/uploads'
+app.config['DOWNLOAD_FOLDER']='/content/aiml-lab-e-waste/python-docker'
 
 @app.route('/', methods=['GET'])
 def index():
@@ -126,8 +127,9 @@ def upload():
     #ON SYSTEM
     # return render_template('result.html', img_path=f"/home/risha/Desktop/aiml-lab-e-waste/python-docker/uploads/{filename}",detected_img_path=f"/content/aiml-lab-e-waste/python-docker/runs/detect/{filename}",battery=result_label['battery'],  bulb= result_label['bulb'], keyboard=result_label['keyboard'], laptop= result_label['laptop'], mobile_phone=result_label['mobile phone'], monitor=result_label['monitor'], mouse=result_label['mouse'])
 
-    img_path= "/content/aiml-lab-e-waste/python-docker/uploads/" + str(filename)
-    detected_img_path= "/content/aiml-lab-e-waste/python-docker/runs/detect/" + str(filename)
+    #img_path= "/content/aiml-lab-e-waste/python-docker/uploads/" + str(filename)
+    img_path= "./uploads/" + str(filename)
+    detected_img_path= "./runs/detect/" + str(filename)
     # ON COLAB
     return render_template('result.html', img_path=img_path,detected_img_path=detected_img_path,battery=result_label['battery'],  bulb= result_label['bulb'], keyboard=result_label['keyboard'], laptop= result_label['laptop'], mobile_phone=result_label['mobile phone'], monitor=result_label['monitor'], mouse=result_label['mouse'])
 
@@ -135,6 +137,7 @@ def upload():
 def ugetpincodedeets():
 # @app.route('/uploads/<path:filename>', methods=['GET', 'POST'])
 # def download(filename):
+    print(request.form['pincode'])
     collector_pincode=request.form['pincode']
     # Appending app path to upload folder path within app root folder
     filename_collector=collector_pincode+ ".csv"
@@ -145,7 +148,11 @@ def ugetpincodedeets():
     # TO RUN ON COLAB
     uploads = os.path.join('/content/aiml-lab-e-waste/python-docker', filename_collector)
     # Returning file from appended path
-    return send_from_directory(directory=uploads, filename=filename_collector)
+    if os.path.exists(uploads):
+      return send_from_directory(app.config['DOWNLOAD_FOLDER'], filename_collector, as_attachment=True)
+    else:
+      return "No e-waste in this area"
+    #return send_from_directory(directory=uploads, path=filename_collector, as_attachment=True)
 if __name__ == '__main__':
     app.run()
     
