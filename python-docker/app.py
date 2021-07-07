@@ -35,7 +35,7 @@ run_with_ngrok(app)
 #app.config['UPLOAD_FOLDER']='/home/risha/Desktop/aiml-lab-e-waste/python-docker/uploads'
 
 # TO RUN ON GOOGLE COLAB
-app.config['UPLOAD_FOLDER']='/content/aiml-lab-e-waste/python-docker/uploads'
+app.config['UPLOAD_FOLDER']='/content/aiml-lab-e-waste/python-docker/static/uploads'
 app.config['DOWNLOAD_FOLDER']='/content/aiml-lab-e-waste/python-docker'
 
 @app.route('/', methods=['GET'])
@@ -93,7 +93,7 @@ def upload():
         #result_label= detect.detect(weights='/home/risha/Desktop/aiml-lab-e-waste/python-docker/weights/best.pt', source=file_path, view_img=True,project='/home/risha/Desktop/aiml-lab-e-waste/python-docker/runs/detect', save_txt=True)
 
         # TO RUN ON COLAB
-        result_label= detect.detect(weights='/content/aiml-lab-e-waste/python-docker/weights/best.pt', save_txt=True, project='/content/aiml-lab-e-waste/python-docker/runs', view_img=True, source=file_path)
+        result_label= detect.detect(weights='/content/aiml-lab-e-waste/python-docker/weights/best.pt', save_txt=True, project='/content/aiml-lab-e-waste/python-docker/static/runs', view_img=True, source=file_path)
 
         #FIELDS STORED IN CSV FILE
         fieldnames = ['name', 'email','phone','landmark','pincode','battery', 'bulb', 'keyboard', 'laptop', 'mobile phone', 'monitor', 'mouse']
@@ -128,8 +128,8 @@ def upload():
     # return render_template('result.html', img_path=f"/home/risha/Desktop/aiml-lab-e-waste/python-docker/uploads/{filename}",detected_img_path=f"/content/aiml-lab-e-waste/python-docker/runs/detect/{filename}",battery=result_label['battery'],  bulb= result_label['bulb'], keyboard=result_label['keyboard'], laptop= result_label['laptop'], mobile_phone=result_label['mobile phone'], monitor=result_label['monitor'], mouse=result_label['mouse'])
 
     #img_path= "/content/aiml-lab-e-waste/python-docker/uploads/" + str(filename)
-    img_path= "./uploads/" + str(filename)
-    detected_img_path= "./runs/detect/" + str(filename)
+    img_path= "./static/uploads/" + str(filename)
+    detected_img_path= "./static/runs/detect/" + str(filename)
     # ON COLAB
     return render_template('result.html', img_path=img_path,detected_img_path=detected_img_path,battery=result_label['battery'],  bulb= result_label['bulb'], keyboard=result_label['keyboard'], laptop= result_label['laptop'], mobile_phone=result_label['mobile phone'], monitor=result_label['monitor'], mouse=result_label['mouse'])
 
