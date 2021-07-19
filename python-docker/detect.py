@@ -7,7 +7,7 @@ import torch
 import torch.backends.cudnn as cudnn
 
 # UNCOMMENT TO RUN ON COLAB
-#from google.colab.patches import cv2_imshow
+from google.colab.patches import cv2_imshow
 
 
 from models.experimental import attempt_load
@@ -148,10 +148,11 @@ def detect(weights='yolov5s.pt',  # model.pt path(s)
             # Stream results
             if view_img:
                 # RUNNING ON SYSTEM
-                cv2.imshow(str(p), im0)
-                cv2.waitKey(1)  # 1 millisecond
+                # cv2.imshow(str(p), im0)
+                # cv2.waitKey(1)  # 1 millisecond
+                
                 # RUNNING ON COLAB
-                # cv2_imshow(im0)
+                cv2_imshow(im0)
             # Save results (image with detections)
             if save_img:
                 if dataset.mode == 'image':

@@ -1,7 +1,7 @@
 # FOR PYTHON FILES
 
-#detected labels
-
+#detected labels and uploaded images
+uploads/
 runs/detect/
 
 # Byte-compiled / optimized / DLL files
